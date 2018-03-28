@@ -11,29 +11,6 @@
 @implementation WeatherRequest
 
 
-+ (NSDate *)dateWithYMD:(NSDate *)date {
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat = @"yyyy-MM-dd";
-    NSString *selfStr = [fmt stringFromDate:date];
-    return [fmt dateFromString:selfStr];
-}
-
-+ (BOOL)isYesterday:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *cmps = [calendar components:NSCalendarUnitDay fromDate:[WeatherRequest dateWithYMD:date] toDate:[WeatherRequest dateWithYMD:[NSDate date]] options:0];
-    return cmps.day == 1;
-}
-
-+ (NSString *)time:(NSDate *)date {
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    
-    format.AMSymbol = @"am";
-    format.PMSymbol = @"pm";
-    format.dateFormat = @"haaa";
-    
-    NSString *timeStr = [format stringFromDate:date];
-    return timeStr;
-}
 
 + (void)sendRequest:(void (^)(NSArray *elements, NSError *error))completionBlock {
 
@@ -93,6 +70,32 @@
     
     [dataTask resume];
 
+}
+
+#pragma mark Helper
+
++ (NSDate *)dateWithYMD:(NSDate *)date {
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    NSString *selfStr = [fmt stringFromDate:date];
+    return [fmt dateFromString:selfStr];
+}
+
++ (BOOL)isYesterday:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmps = [calendar components:NSCalendarUnitDay fromDate:[WeatherRequest dateWithYMD:date] toDate:[WeatherRequest dateWithYMD:[NSDate date]] options:0];
+    return cmps.day == 1;
+}
+
++ (NSString *)time:(NSDate *)date {
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    
+    format.AMSymbol = @"am";
+    format.PMSymbol = @"pm";
+    format.dateFormat = @"haaa";
+    
+    NSString *timeStr = [format stringFromDate:date];
+    return timeStr;
 }
 
 @end

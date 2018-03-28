@@ -34,6 +34,7 @@
 - (void)loadData {
     [self.indicatorView startAnimating];
     
+    //send request
     __weak typeof(self) weakself = self;
     [WeatherRequest sendRequest:^(NSArray *elements, NSError *error) {
         if(error == nil) {
@@ -48,10 +49,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadData];
+    
+    //load data directly for test
+    //[self loadData];
 }
 
 - (void)loadWeather:(NSArray *)array {
+    
     NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
     
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL: jsCodeLocation
